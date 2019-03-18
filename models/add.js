@@ -1,10 +1,10 @@
 const mongoose = require('../mongoose.js')
 const Schema = mongoose.Schema
 
-const NumSchema = new Schema({
-    num:Number
+const textSchema = new Schema({
+    text:String
 })
 
-const Num = mongoose.model('Num',NumSchema)
+const Text = mongoose.model('Text',textSchema)
 
-module.exports = Num
+module.exports = Text

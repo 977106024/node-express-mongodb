@@ -3,6 +3,10 @@ const express = require('express')
 const app = express()
 const routes = require('./routes/index.js')
 
+//post解析请求头解析
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
 
 //引入mongoose相关模块
 require('./models/add.js')

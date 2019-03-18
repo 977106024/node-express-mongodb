@@ -1,9 +1,12 @@
-const Num = require('../models/add')
+const TextModels = require('../models/add')
 
 // 加数
 exports.add = (req,res) => {
-    const addNum = new Num({num:'这是一个字符串'})
-    addNum.save(function(err){
+    const {content} = req.body
+    const Text = new TextModels({text:content})
+    console.log(Text)
+    return
+    Text.save(function(err){
         if(err){
             res.send(err)
         }else{
