@@ -14,7 +14,7 @@ exports.getWxUser = (req, res) => {
             let data = JSON.parse(body)
             const token = jwt.sign(
                 {
-                    name:body.openid
+                    name:data.openid
                 },
                 "xiaoyue",
                 {
@@ -25,20 +25,24 @@ exports.getWxUser = (req, res) => {
                 openid:data.openid,
                 session_key:data.session_key
             })
-            User.save((err)=>{
-                if(err){
-                    res.send(err)
-                }else{
-                    console.log('保存成功！！！')
-                    res.send({
-                        code:200,
-                        message:'登录成功',
-                        data:{
-                            token:token
-                        }
-                    })
-                }
+            let openid = {'openid':data.openid}
+            User.find(function(err,res){
+                console.log(res)
             })
+            // User.save((err)=>{
+            //     if(err){
+            //         res.send(err)
+            //     }else{
+            //         console.log('保存成功！！！')
+            //         res.send({
+            //             code:200,
+            //             message:'登录成功',
+            //             data:{
+            //                 token:token
+            //             }
+            //         })
+            //     }
+            // })
         }
     })
 }
