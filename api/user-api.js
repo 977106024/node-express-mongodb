@@ -11,6 +11,7 @@ exports.getWxUser = (req, res) => {
     const URL = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`
     request(URL, (error, response, body) => {
         if (!error && response.statusCode == 200) {
+            let data = JSON.parse(body)
             const token = jwt.sign(
                 {
                     name:body.openid
@@ -21,8 +22,8 @@ exports.getWxUser = (req, res) => {
                 }
             )
             const User = new userModel({
-                openid:body.openid,
-                session_key:body.session_key
+                openid:data.openid,
+                session_key:data.session_key
             })
             User.save((err)=>{
                 if(err){
