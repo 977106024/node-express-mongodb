@@ -5,6 +5,10 @@ exports.add = (req,res) => {
     const {content} = req.body
     const Text = new TextModels({text:content})
     console.log(Text)
+    TextModels.find(function(err,res){
+        console.log('查询apifind')
+        console.log(res)
+    })
     return
     Text.save(function(err){
         if(err){

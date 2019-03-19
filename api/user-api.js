@@ -1,12 +1,13 @@
 const request = require('request')
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user')
+
 // 微信开发者ID
 const APPID = 'wxf79a40b8e7cb52b6'
 const SECRET = '712ff2b1575d419df67e1c618a53be8e'
 
 //请求微信登录接口
-exports.getWxUser = (req, res) => {
+exports.getWxUser = (req, ress) => {
     let code = req.query.code
     const URL = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`
     request(URL, (error, response, body) => {
@@ -26,23 +27,28 @@ exports.getWxUser = (req, res) => {
                 session_key:data.session_key
             })
             let openid = {'openid':data.openid}
-            User.find(function(err,res){
-                console.log(res)
+            let session_key = {'session_key':data.session_key}
+            userModel.find(openid,function(err,res){
+                if(res.length === 0){
+                    User.save((err)=>{
+                        if(err){
+                            ress.send(err)
+                        }else{
+                            ress.send({
+                                code:200,
+                                message:'登录成功',
+                                data:{
+                                    token:token
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    userModel.update(openid,session_key,function(err,res){
+                        ress.send(res)
+                    })
+                }
             })
-            // User.save((err)=>{
-            //     if(err){
-            //         res.send(err)
-            //     }else{
-            //         console.log('保存成功！！！')
-            //         res.send({
-            //             code:200,
-            //             message:'登录成功',
-            //             data:{
-            //                 token:token
-            //             }
-            //         })
-            //     }
-            // })
         }
     })
 }
