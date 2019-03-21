@@ -49,7 +49,10 @@ exports.getWxUser = (req, res) => {
                 })
             } catch(err) {
                 //报错返回
-                res.json(err)
+                res.json({
+                    code:-200,
+                    data:err.toString()
+                })
             }
         }
     })
