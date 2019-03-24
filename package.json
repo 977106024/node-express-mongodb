@@ -10,11 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "baidu-aip-sdk": "^2.3.9",
     "bluebird": "^3.5.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.19",
+    "multiparty": "^4.2.1",
     "request": "^2.88.0"
   }
 }
