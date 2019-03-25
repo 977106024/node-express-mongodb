@@ -6,7 +6,7 @@ kfhall/
 node_modules/
 npm-debug.log
 yarn-error.log
-file/
+recorder/
 
 # Editor directories and files
 .idea
