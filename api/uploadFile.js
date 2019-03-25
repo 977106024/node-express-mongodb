@@ -41,13 +41,23 @@ exports.uploadFile = (req, res) => {
 
                     // 识别本地语音文件
                     client.recognize(voiceBase64, 'wav', 16000).then(function (result) {
-                        let msg = JSON.stringify(result);
-                        res.json({
-                            code: '2',
-                            data: {
-                                msg: msg
-                            }
-                        })
+                        if(result.err_no == 0){
+                            //成功识别
+                            res.json({
+                                code: 200,
+                                data: {
+                                    msg: result.result
+                                }
+                            })
+                        }else{
+                            //识别失败
+                            res.json({
+                                code:-200,
+                                data:{
+                                    err:result
+                                }
+                            })
+                        }
 
                     }, function (err) {
                         res.json(err)
