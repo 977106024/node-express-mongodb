@@ -19,6 +19,13 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
+//验证token
+app.use((req, res, next)=>{
+  //从不同的方式拿token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  console.log(token)
+})
+
 //引入mongoose相关模块
 // require('./models/add.js')
 
