@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes/index.js')
+const jwt = require('jsonwebtoken')
 
 
 //设置允许跨域访问该服务.
@@ -14,16 +15,35 @@ app.all('*', function (req, res, next) {
     next();
   });
 
-//post解析请求头解析
+//post请求解析
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
-//验证token
+//中间件拦截请求
 app.use((req, res, next)=>{
-  //从不同的方式拿token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  console.log(token)
+  //登录不需要验证token
+  if(req.path === '/weChatApp/login'){
+    next()
+  }else{
+     //从不同的方式拿token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if(token){
+      //验证token
+      jwt.verify(token,'xiaoyue',function(err,decoded){
+        if(err){
+          res.json({
+            code:-200,
+            data:{
+              msg:'无效的token'
+            }
+          })
+        }else{
+          next()
+        }
+      })
+    }
+  }
 })
 
 //引入mongoose相关模块

@@ -28,7 +28,6 @@ exports.getWxUser = (req, res) => {
             try{
                 //查询是否有此用户
                 let queryRes = await userModel.findOne(openid)
-                console.log(queryRes)
                 if(queryRes === null){
                     //没有此用户 保存
                     const User = new userModel({
