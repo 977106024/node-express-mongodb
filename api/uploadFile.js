@@ -6,6 +6,7 @@ const ffmpeg = require('../utils/ffmpge');
 // 文件上传
 exports.uploadFile = (req, res) => {
     console.log('录音22')
+    console.log(req.decoded.name)
 
     //生成multiparty对象，并配置上传目标路径
     const form = new multiparty.Form({
