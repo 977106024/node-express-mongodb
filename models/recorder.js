@@ -2,7 +2,7 @@ const mongoose = require('../mongoose.js')
 const Schema = mongoose.Schema
 
 const RecorderSchema = new Schema({
-    openid:String,
+    openId:String,
     content:String,
     createdTime:Number,
 })

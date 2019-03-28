@@ -41,9 +41,11 @@ exports.getWxUser = (req, res) => {
                 }
 
                 try {
+
                     //查询是否有此用户
-                    let queryRes = await userModel.findOne(openid)
-                    if (queryRes === null) {
+                    let findRes = await userModel.findOne(openid)
+                    if (findRes === null) {
+
                         //没有此用户 保存
                         const User = new userModel({
                             openid: data.openid,
@@ -51,9 +53,11 @@ exports.getWxUser = (req, res) => {
                         })
                         await User.save()
                     } else {
+
                         //此用户存在 更新session_key
                         await userModel.update(openid, session_key)
                     }
+
                     //成功返回
                     res.json({
                         code: 200,
@@ -63,6 +67,7 @@ exports.getWxUser = (req, res) => {
                         }
                     })
                 } catch (err) {
+
                     //报错返回
                     res.json({
                         code: -200,
