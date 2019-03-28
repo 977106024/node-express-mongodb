@@ -47,6 +47,7 @@ exports.uploadFile = async (req, res) => {
         res.json(result)
 
     } catch (err) {
+        console.log(err,2)
         //报错返回
         res.json({
             code: -200,
