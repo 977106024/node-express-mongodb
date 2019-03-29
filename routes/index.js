@@ -8,8 +8,10 @@ const uploadApi = require('../api/uploadFile.js')
 router.post('/add',weChatApi.add)
 //登录
 router.get('/login',userApi.getWxUser)
-//上传文件
-router.post('/uploadFile',uploadApi.uploadFile)
+//上传文件->语音
+router.post('/uploadFile',uploadApi.uploadVoice)
+//便签列表
+router.get('/noteList',uploadApi.noteList)
 //工作用
 router.get('/admin/zuanshi',function(req,res){
     const data = [

@@ -22,13 +22,16 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 //中间件拦截请求
 app.use((req, res, next)=>{
+
   //登录不需要验证token
   if(req.path === '/weChatApp/login'){
     next()
   }else{
+
      //从不同的方式拿token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(token){
+
       //验证token
       jwt.verify(token,'xiaoyue',function(err,decoded){
         if(err){
@@ -46,9 +49,6 @@ app.use((req, res, next)=>{
     }
   }
 })
-
-//引入mongoose相关模块
-// require('./models/add.js')
 
 //捕获请求
 app.use('/weChatApp',routes)

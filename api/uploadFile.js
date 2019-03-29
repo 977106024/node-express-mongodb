@@ -5,11 +5,11 @@ const fs = require('fs');
 const ffmpeg = require('../utils/ffmpge');
 const RecorderModel = require('../models/Recorder')
 
-//multiArgs: true 数组的形式返回多个值
+//multiArgs: true 数组的形式返回 [多个值,,]
 Promise.promisifyAll(multiparty, { multiArgs: true })
 
-// 文件上传
-exports.uploadFile = async (req, res) => {
+// 文件上传-- 语音文件
+exports.uploadVoice = async (req, res) => {
     console.log('录音')
 
     try {
@@ -31,7 +31,7 @@ exports.uploadFile = async (req, res) => {
         //百度AI识别结果
         let result = await baiduAI(wavPath)
 
-        //查库
+        //id
         let openId = req.decoded.name
         // let findRes = await Recorder.findOne({openId:openId})
 
@@ -49,10 +49,7 @@ exports.uploadFile = async (req, res) => {
     } catch (err) {
         console.log(err,2)
         //报错返回
-        res.json({
-            code: -200,
-            data: err.toString()
-        })
+        res.json(err)
     }
 }
 
@@ -98,7 +95,6 @@ function baiduAI(wavPath) {
                         msg: result.result
                     }
                 })
-
             } else {
 
                 //识别失败
@@ -108,10 +104,22 @@ function baiduAI(wavPath) {
                         err: result
                     }
                 })
-
             }
         }, function (err) {
             reject(err)
         });
     })
 }
+
+//获取所有语音内容-- /noteList
+exports.noteList = async (req,res) => {
+    console.log('查询所有记录')
+    let openId = req.decoded.name
+    let findRes = await RecorderModel.find({openId:openId},{_id:1,content:1,createdTime:1})
+    res.json({
+        code:200,
+        data:{
+            result:findRes
+        }
+    })
+}        
