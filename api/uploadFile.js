@@ -9,7 +9,7 @@ const RecorderModel = require('../models/Recorder')
 Promise.promisifyAll(multiparty, { multiArgs: true })
 
 // 文件上传-- 语音文件
-exports.uploadVoice = async (req, res) => {
+exports.uploadRecorder = async (req, res) => {
     console.log('录音')
 
     try {
@@ -29,7 +29,7 @@ exports.uploadVoice = async (req, res) => {
         let wavPath = await getWav(filePath)
 
         //百度AI识别结果
-        let result = await baiduAI(wavPath)
+        let baiduRes = await baiduAI(wavPath)
 
         //id
         let openId = req.decoded.name
@@ -37,19 +37,31 @@ exports.uploadVoice = async (req, res) => {
 
         // 存库
         const Recorder = new RecorderModel({
-            openId:openId,
-            content:result.data.msg[0],
-            createdTime:Date.now()
+            openId: openId,
+            content: baiduRes.result[0],
+            createdTime: Date.now()
         })
-        await Recorder.save()
+        let result = await Recorder.save()
 
         //返回结果
-        res.json(result)
+        res.json({
+            code: 200,
+            data: {
+                result: {
+                    _id: result._id,
+                    content: result.content,
+                    createdTime: result.createdTime
+                }
+            }
+        })
 
     } catch (err) {
-        console.log(err,2)
+        console.log(err, 2)
         //报错返回
-        res.json(err)
+        res.json({
+            code: -200,
+            err: err
+        })
     }
 }
 
@@ -89,21 +101,11 @@ function baiduAI(wavPath) {
             if (result.err_no == 0) {
 
                 //成功识别
-                resolve({
-                    code: 200,
-                    data: {
-                        msg: result.result
-                    }
-                })
+                resolve(result)
             } else {
 
                 //识别失败
-                reject({
-                    code: -200,
-                    data: {
-                        err: result
-                    }
-                })
+                reject(result)
             }
         }, function (err) {
             reject(err)
@@ -111,15 +113,48 @@ function baiduAI(wavPath) {
     })
 }
 
-//获取所有语音内容-- /noteList
-exports.noteList = async (req,res) => {
+//获取所有便签-- /noteList
+exports.noteList = async (req, res) => {
     console.log('查询所有记录')
     let openId = req.decoded.name
-    let findRes = await RecorderModel.find({openId:openId},{_id:1,content:1,createdTime:1})
+    let findRes = await RecorderModel.find({ openId: openId }, { _id: 1, content: 1, createdTime: 1 })
     res.json({
-        code:200,
-        data:{
-            result:findRes
+        code: 200,
+        data: {
+            result: findRes
         }
     })
-}        
+}
+
+//删除
+exports.removeNote = async (req, res) => {
+    const {id} = req.body
+
+    try {
+        let result = await RecorderModel.findByIdAndDelete({ _id: id })
+        res.json({
+            code:200,
+            data:{
+                msg:"成功"
+            }
+        })
+    } catch {
+        res.json({
+            code:-200,
+            err:result
+        })
+    }
+}
+
+//编辑
+exports.editNote = (req, res) => {
+    const {id,content} = req.body
+    RecorderModel.updateOne({ '_id': id }, { 'content': content }).then(res => {
+        res.json({
+            code:200,
+            data:{
+                msg:"成功"
+            }
+        })
+    })
+}

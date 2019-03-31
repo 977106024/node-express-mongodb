@@ -36,7 +36,7 @@ app.use((req, res, next)=>{
       jwt.verify(token,'xiaoyue',function(err,decoded){
         if(err){
           res.json({
-            code:-200,
+            code:400,
             data:{
               msg:'无效的token'
             }
