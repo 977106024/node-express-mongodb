@@ -46,6 +46,14 @@ app.use((req, res, next)=>{
           next()
         }
       })
+    }else{
+      //没有带token
+      res.json({
+        code:400,
+        data:{
+          msg:'没有登录！'
+        }
+      })
     }
   }
 })

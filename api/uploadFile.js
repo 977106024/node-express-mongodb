@@ -131,7 +131,7 @@ exports.removeNote = async (req, res) => {
     const {id} = req.body
 
     try {
-        let result = await RecorderModel.findByIdAndDelete({ _id: id })
+        await RecorderModel.findByIdAndDelete({ _id: id })
         res.json({
             code:200,
             data:{
@@ -141,7 +141,7 @@ exports.removeNote = async (req, res) => {
     } catch(err) {
         res.json({
             code:-200,
-            err:result
+            err:err
         })
     }
 }
