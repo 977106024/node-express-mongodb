@@ -39,7 +39,7 @@ exports.uploadRecorder = async (req, res) => {
         const Recorder = new RecorderModel({
             openId: openId,
             content: baiduRes.result[0],
-            createdTime: Date.now()
+            createdTime: parseInt(Date.now()/1000)
         })
         let result = await Recorder.save()
 
@@ -138,7 +138,7 @@ exports.removeNote = async (req, res) => {
                 msg:"成功"
             }
         })
-    } catch {
+    } catch(err) {
         res.json({
             code:-200,
             err:result
