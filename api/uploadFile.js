@@ -149,7 +149,7 @@ exports.removeNote = async (req, res) => {
 //编辑
 exports.editNote = (req, res) => {
     const {id,content} = req.body
-    RecorderModel.updateOne({ '_id': id }, { 'content': content }).then(res => {
+    RecorderModel.updateOne({ '_id': id }, { 'content': content }).then(result => {
         res.json({
             code:200,
             data:{
