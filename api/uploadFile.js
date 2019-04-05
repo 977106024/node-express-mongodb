@@ -3,7 +3,7 @@ const multiparty = require('multiparty')
 const AipSpeech = require("baidu-aip-sdk").speech;
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
-const RecorderModel = require('../models/Recorder')
+const RecorderModel = require('../models/recorder')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
 Promise.promisifyAll(multiparty, { multiArgs: true })
