@@ -2,7 +2,7 @@ const Promise = require('bluebird')
 const multiparty = require('multiparty')
 const AipSpeech = require("baidu-aip-sdk").speech;
 const fs = require('fs');
-const ffmpeg = require('../utils/ffmpge');
+const ffmpeg = require('fluent-ffmpeg');
 const RecorderModel = require('../models/Recorder')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
