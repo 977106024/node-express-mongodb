@@ -147,14 +147,41 @@ exports.removeNote = async (req, res) => {
 }
 
 //编辑
-exports.editNote = (req, res) => {
+exports.editNote = async (req, res) => {
     const {id,content} = req.body
-    RecorderModel.updateOne({ '_id': id }, { 'content': content }).then(result => {
+
+    try {
+        await RecorderModel.updateOne({ '_id': id }, { 'content': content })
         res.json({
             code:200,
             data:{
                 msg:"成功"
             }
         })
-    })
+    } catch(err) {
+        res.json({
+            code:-200,
+            err:err
+        })
+    }
+}
+
+//便签总条数
+exports.getNoteCount = async (req,res) => {
+    let openId = req.decoded.name
+
+    try {
+        let result = await RecorderModel.count({openId: openId})
+        res.json({
+            code:200,
+            data:{
+                result:result
+            }
+        })
+    } catch(err){
+        res.json({
+            code:-200,
+            err:err
+        })
+    }
 }
