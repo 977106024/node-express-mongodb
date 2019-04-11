@@ -16,7 +16,7 @@ exports.upImgFile = async (req,res) =>{
 	console.log(files)
 }
 
-// return
+return
 // 设置APPID/AK/SK
 var APP_ID = "15981584";
 var API_KEY = "X9LE3pz9TPHDFGur4yGg0T2G";
@@ -29,34 +29,34 @@ var fs = require('fs');
 
 var image = fs.readFileSync("./api/file/imgChangeText/1.jpg").toString("base64");
 
-// 调用通用文字识别, 图片参数为本地图片
-client.generalBasic(image).then(function(result) {
-    console.log(JSON.stringify(result));
-}).catch(function(err) {
-    // 如果发生网络错误
-    console.log(err);
-});
+// // 调用通用文字识别, 图片参数为本地图片
+// client.generalBasic(image).then(function(result) {
+//     console.log(JSON.stringify(result));
+// }).catch(function(err) {
+//     // 如果发生网络错误
+//     console.log(err);
+// });
+// 
+// // 如果有可选参数
+// var options = {};
+// options["language_type"] = "CHN_ENG";
+// options["detect_direction"] = "true";
+// options["detect_language"] = "true";
+// options["probability"] = "true";
+// 
+// // 带参数调用通用文字识别, 图片参数为本地图片
+// client.generalBasic(image, options).then(function(result) {
+//     console.log(JSON.stringify(result));
+// }).catch(function(err) {
+//     // 如果发生网络错误
+//     console.log(err);
+// });;
 
-// 如果有可选参数
-var options = {};
-options["language_type"] = "CHN_ENG";
-options["detect_direction"] = "true";
-options["detect_language"] = "true";
-options["probability"] = "true";
-
-// 带参数调用通用文字识别, 图片参数为本地图片
-client.generalBasic(image, options).then(function(result) {
-    console.log(JSON.stringify(result));
-}).catch(function(err) {
-    // 如果发生网络错误
-    console.log(err);
-});;
-
-var url = "http//www.x.com/sample.jpg";
+var url = "wxfile://tmp_f6761b8694cfc6456901427548eccf8dfaf5c6733e5b9e29.jpg";
 
 // 调用通用文字识别, 图片参数为远程url图片
 client.generalBasicUrl(url).then(function(result) {
-    console.log(JSON.stringify(result));
+    console.log(JSON.stringify(result),'在线图片');
 }).catch(function(err) {
     // 如果发生网络错误
     console.log(err);
