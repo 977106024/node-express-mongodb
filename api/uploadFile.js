@@ -28,7 +28,7 @@ exports.uploadRecorder = async (req, res) => {
         //转换语音格式 wav
         let wavPath = await getWav(filePath)
 
-        //百度AI识别结果
+        //百度AI语音识别
         let baiduRes = await baiduAI(wavPath)
 
         //id

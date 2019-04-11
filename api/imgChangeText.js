@@ -1,78 +1,87 @@
 const Promise = require('bluebird')
 const multiparty = require('multiparty')
-var AipOcrClient = require("baidu-aip-sdk").ocr;
+const AipOcrClient = require("baidu-aip-sdk").ocr
+const textExtractModel = require('../models/textExtract')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
-Promise.promisifyAll(multiparty, { multiArgs: true })
+Promise.promisifyAll(multiparty, {
+	multiArgs: true
+})
 
-exports.upImgFile = async (req,res) =>{
+exports.upImgFile = async (req, res) => {
+	console.log(555555)
 	//生成multiparty对象，并配置上传目标路径
 	const form = new multiparty.Form({
-	    uploadDir: './api/file/imgChangeText/'
+		uploadDir: './api/file/imgChangeText/'
 	});
-	
-	//解析文件
-	const files = await form.parseAsync(req)
-	console.log(files)
+
+	try {
+
+		//解析文件
+		const files = await form.parseAsync(req)
+
+		//文件存储路径
+		let filePath = files[1].imgfile[0].path
+
+		//百度AI文字识别
+		let baiduRes = await baiduAI(filePath)
+
+		//id
+		let openId = req.decoded.name
+
+		// 存库
+		const textExtract = new textExtractModel({
+			openId: openId,
+			text: baiduRes.words_result,
+			createdTime: parseInt(Date.now() / 1000)
+		})
+		let result = await textExtract.save()
+		
+		//返回结果
+		res.json({
+			code: 200,
+			data: result.text
+		})
+
+	} catch (err) {
+		res.json({
+			code: -200,
+			err: err
+		})
+	}
 }
 
-return
-// 设置APPID/AK/SK
-var APP_ID = "15981584";
-var API_KEY = "X9LE3pz9TPHDFGur4yGg0T2G";
-var SECRET_KEY = "AAMxWvGWb7kE3YhhrOS03pzK3VrGbmE7";
+//百度AI识别本地图片->返回文字
+function baiduAI(imgPath) {
+	return new Promise((resolve, reject) => {
 
-// 新建一个对象，建议只保存一个对象调用服务接口
-var client = new AipOcrClient(APP_ID, API_KEY, SECRET_KEY);
+		// 百度id Key SecretKey
+		const APP_ID = "15981584";
+		const API_KEY = "X9LE3pz9TPHDFGur4yGg0T2G";
+		const SECRET_KEY = "AAMxWvGWb7kE3YhhrOS03pzK3VrGbmE7";
+		const client = new AipOcrClient(APP_ID, API_KEY, SECRET_KEY);
 
-var fs = require('fs');
+		const fs = require('fs');
 
-var image = fs.readFileSync("./api/file/imgChangeText/1.jpg").toString("base64");
+		//转成base64
+		let image = fs.readFileSync(imgPath).toString("base64");
 
-// // 调用通用文字识别, 图片参数为本地图片
-// client.generalBasic(image).then(function(result) {
-//     console.log(JSON.stringify(result));
-// }).catch(function(err) {
-//     // 如果发生网络错误
-//     console.log(err);
-// });
-// 
-// // 如果有可选参数
-// var options = {};
-// options["language_type"] = "CHN_ENG";
-// options["detect_direction"] = "true";
-// options["detect_language"] = "true";
-// options["probability"] = "true";
-// 
-// // 带参数调用通用文字识别, 图片参数为本地图片
-// client.generalBasic(image, options).then(function(result) {
-//     console.log(JSON.stringify(result));
-// }).catch(function(err) {
-//     // 如果发生网络错误
-//     console.log(err);
-// });;
+		// 如果有可选参数
+		var options = {};
+		options["language_type"] = "CHN_ENG"; //识别语言类型：中-英
+		options["detect_direction"] = "true";
+		options["detect_language"] = "true";
+		// options["probability"] = "true";
 
-var url = "wxfile://tmp_f6761b8694cfc6456901427548eccf8dfaf5c6733e5b9e29.jpg";
+		// 带参数调用通用文字识别, 图片参数为本地图片
+		client.generalBasic(image, options).then(function (result) {
 
-// 调用通用文字识别, 图片参数为远程url图片
-client.generalBasicUrl(url).then(function(result) {
-    console.log(JSON.stringify(result),'在线图片');
-}).catch(function(err) {
-    // 如果发生网络错误
-    console.log(err);
-});
+			// 成功识别
+			resolve(result)
+		}).catch(function (err) {
 
-// 如果有可选参数
-var options = {};
-options["language_type"] = "CHN_ENG";
-options["detect_direction"] = "true";
-options["detect_language"] = "true";
-options["probability"] = "true";
-
-// 带参数调用通用文字识别, 图片参数为远程url图片
-client.generalBasicUrl(url, options).then(function(result) {
-    console.log(JSON.stringify(result));
-}).catch(function(err) {
-    // 如果发生网络错误
-    console.log(err);
-});;
+			// 如果发生网络错误
+			reject(err)
+		});
+	})
+}
