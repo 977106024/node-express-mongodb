@@ -187,15 +187,21 @@ exports.getNoteCount = async (req,res) => {
 }
 
 //模糊查询
-exports.noteSearch = (req,res) => {
+exports.noteSearch = async (req,res) => {
     let openId = req.decoded.name
     let text = req.query.text
-
     const reg = new RegExp(text,'i')
-    RecorderModel.find({openId:openId,content:reg}).then(result => {
+
+    try {
+        let result = await RecorderModel.find({openId:openId,content:reg},{openId:0})
         res.json({
             code:200,
             data:result
         })
-    })
+    }catch(err){
+        res.json({
+            code:-200,
+            err:err
+        })
+    }
 }
