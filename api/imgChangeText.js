@@ -26,22 +26,34 @@ exports.upImgFile = async (req, res) => {
 		//百度AI文字识别
 		let baiduRes = await baiduAI(filePath)
 
-		//id
-		let openId = req.decoded.name
+		//图片上是否有文字
+		if (baiduRes.words_result_num === 0 && baiduRes.words_result.length === 0) {
 
-		// 存库
-		const textExtract = new textExtractModel({
-			openId: openId,
-			text: baiduRes.words_result,
-			createdTime: parseInt(Date.now() / 1000)
-		})
-		let result = await textExtract.save()
-		
-		//返回结果
-		res.json({
-			code: 200,
-			data: result.text
-		})
+			//图片上没有文字
+			res.json({
+				code: -200,
+				data: "图片无文字"
+			})
+		} else {
+			//返回文字成功
+
+			//id
+			let openId = req.decoded.name
+
+			// 存库
+			const textExtract = new textExtractModel({
+				openId: openId,
+				text: baiduRes.words_result,
+				createdTime: parseInt(Date.now() / 1000)
+			})
+			let result = await textExtract.save()
+
+			//返回结果
+			res.json({
+				code: 200,
+				data: result.text
+			})
+		}
 
 	} catch (err) {
 		res.json({
