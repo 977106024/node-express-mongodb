@@ -19,5 +19,7 @@ router.post('/editNote',recorderApi.editNote)
 router.get('/getNoteCount',recorderApi.getNoteCount)
 //拍照上传图片识别文字
 router.post('/upImgFile',upImgFileApi.upImgFile)
+//搜索
+router.get('/noteSearch',recorderApi.noteSearch)
 
 module.exports = router

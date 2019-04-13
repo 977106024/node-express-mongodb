@@ -185,3 +185,15 @@ exports.getNoteCount = async (req,res) => {
         })
     }
 }
+
+//模糊查询
+exports.noteSearch = (req,res) => {
+    let text = req.query.text
+    const reg = new RegExp(text,'i')
+    RecorderModel.find({content:reg}).then(result => {
+        res.json({
+            code:200,
+            data:result
+        })
+    })
+}
