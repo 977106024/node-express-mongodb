@@ -13,4 +13,6 @@
 
 使用ffmpeg完成音频格式转码。
 
+支持https
+
 前端代码：https://github.com/977106024/note-wechat-app
