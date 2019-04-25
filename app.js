@@ -3,6 +3,16 @@ const express = require('express')
 const app = express()
 const routes = require('./routes/index.js')
 const jwt = require('jsonwebtoken')
+const fs = require('fs')
+
+
+// http https
+const http = require('http')
+const https = require('https')
+const options = {
+  key:fs.readFileSync('./utils/ssl/2114558_api.xuewuzhijing.top.key'),
+  cert:fs.readFileSync('./utils/ssl/2114558_api.xuewuzhijing.top.pem')
+}
 
 
 //设置允许跨域访问该服务.
@@ -62,4 +72,6 @@ app.use((req, res, next)=>{
 app.use('/weChatApp',routes)
 
 // 监听端口
-app.listen(2333)
+// app.listen(2333)
+http.createServer(app).listen(2333)
+https.createServer(options,app).listen(4848)
