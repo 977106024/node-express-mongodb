@@ -74,4 +74,4 @@ app.use('/weChatApp',routes)
 // 监听端口
 // app.listen(2333)
 http.createServer(app).listen(2333)
-https.createServer(options,app).listen(4848)
+https.createServer(options,app).listen(443)

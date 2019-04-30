@@ -2,6 +2,7 @@ const Promise = require('bluebird')
 const multiparty = require('multiparty')
 const AipOcrClient = require("baidu-aip-sdk").ocr
 const textExtractModel = require('../models/textExtract')
+const fs = require('fs');
 
 //multiArgs: true 数组的形式返回 [多个值,,]
 Promise.promisifyAll(multiparty, {
@@ -73,17 +74,15 @@ function baiduAI(imgPath) {
 		const SECRET_KEY = "AAMxWvGWb7kE3YhhrOS03pzK3VrGbmE7";
 		const client = new AipOcrClient(APP_ID, API_KEY, SECRET_KEY);
 
-		const fs = require('fs');
-
-		//转成base64
-		let image = fs.readFileSync(imgPath).toString("base64");
-
 		// 如果有可选参数
 		var options = {};
 		options["language_type"] = "CHN_ENG"; //识别语言类型：中-英
 		options["detect_direction"] = "true";
 		options["detect_language"] = "true";
 		// options["probability"] = "true";
+
+		//转成base64
+		let image = fs.readFileSync(imgPath).toString("base64");
 
 		// 带参数调用通用文字识别, 图片参数为本地图片
 		client.generalBasic(image, options).then(function (result) {
