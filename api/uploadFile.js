@@ -56,7 +56,7 @@ exports.uploadRecorder = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err, 2)
+        
         //报错返回
         res.json({
             code: -200,

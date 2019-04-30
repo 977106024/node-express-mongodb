@@ -10,7 +10,8 @@ Promise.promisifyAll(multiparty, {
 })
 
 exports.upImgFile = async (req, res) => {
-	console.log(555555)
+	console.log("img5555")
+	
 	//生成multiparty对象，并配置上传目标路径
 	const form = new multiparty.Form({
 		uploadDir: './api/file/imgChangeText/'

@@ -10,8 +10,8 @@ const fs = require('fs')
 const http = require('http')
 const https = require('https')
 const options = {
-  key:fs.readFileSync('./utils/ssl/2114558_api.xuewuzhijing.top.key'),
-  cert:fs.readFileSync('./utils/ssl/2114558_api.xuewuzhijing.top.pem')
+  key:fs.readFileSync('utils/ssl/2114558_api.xuewuzhijing.top.key'),
+  cert:fs.readFileSync('utils/ssl/2114558_api.xuewuzhijing.top.pem')
 }
 
 
