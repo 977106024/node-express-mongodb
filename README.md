@@ -17,7 +17,7 @@
 
 前端代码库：https://github.com/977106024/note-wechat-app
 
-# reacr-admin
+# reacr-admin服务端
 >react写的后台  
 
 使用`qrcode`生成二维码
