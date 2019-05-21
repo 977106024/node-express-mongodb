@@ -1,3 +1,7 @@
+/**
+ * 微信小程序
+ */
+
 const express = require('express')
 const router = express.Router()
 const userApi = require('../api/user-api.js')
@@ -21,5 +25,6 @@ router.get('/getNoteCount',recorderApi.getNoteCount)
 router.post('/upImgFile',upImgFileApi.upImgFile)
 //搜索
 router.get('/noteSearch',recorderApi.noteSearch)
+
 
 module.exports = router

@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes/index.js')
+const routesAdmin = require('./routes/admin.js')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 
@@ -34,7 +35,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use((req, res, next)=>{
 
   //登录不需要验证token
-  if(req.path === '/weChatApp/login'){
+  if(req.path === '/weChatApp/login' || req.path === '/admin/QrLogin'){
     next()
   }else{
 
@@ -69,7 +70,8 @@ app.use((req, res, next)=>{
 })
 
 //捕获请求
-app.use('/weChatApp',routes)
+app.use('/weChatApp',routes) //小程序
+app.use('/admin',routesAdmin) //admin
 
 // 监听端口
 // app.listen(2333)
