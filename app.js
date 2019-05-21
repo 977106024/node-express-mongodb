@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 //中间件拦截请求
 app.use((req, res, next)=>{
-
+  
   //登录不需要验证token
   if(req.path === '/weChatApp/login' || req.path === '/admin/QrLogin'){
     next()
