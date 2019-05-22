@@ -4,9 +4,11 @@
  */
 
 const LoginModel = require('../../models/login')
+const qrUuidModel = require('../../models/admin/qrUuid')
 
 exports.LoginPcConfirm = async (req, res) => {
-    let openId = req.body.id
+    const {id:openId,uuid} = req.body
+    console.log(openId)
 
     try {
 
@@ -18,8 +20,8 @@ exports.LoginPcConfirm = async (req, res) => {
 
         if(hasId){
 
-            //改变登录状态 true 确认登录
-            await LoginModel.updateOne({'openId':'9771'},{'status':true})
+            //改变uuid登录状态 true 确认登录
+            await qrUuidModel.updateOne({'uuid':uuid},{'status':true})
 
             res.json({
                 code:200,
