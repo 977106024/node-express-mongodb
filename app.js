@@ -86,3 +86,10 @@ app.use('/hall',routesHall) //hall
 // app.listen(2333)
 http.createServer(app).listen(2333)
 https.createServer(options,app).listen(443)
+
+/**
+ * 响应码：
+ * 200 ok
+ * -200 error
+ * 401 无权限
+ */

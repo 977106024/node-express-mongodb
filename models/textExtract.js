@@ -1,4 +1,5 @@
-const mongoose = require('../mongoose.js')
+const mongoose = require('mongoose')
+const DB = require('../mongoose.js')
 const Schema = mongoose.Schema
 
 const textExtractSchema = new Schema({
@@ -7,6 +8,6 @@ const textExtractSchema = new Schema({
     createdTime:Number,
 })
 
-const textExtract = mongoose.model('textExtract',textExtractSchema)
+const textExtract = DB.weChatAppDB.model('textExtract',textExtractSchema)
 
 module.exports = textExtract

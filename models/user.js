@@ -1,4 +1,5 @@
-const mongoose = require('../mongoose.js')
+const mongoose = require('mongoose')
+const DB = require('../mongoose.js')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -6,6 +7,6 @@ const userSchema = new Schema({
     session_key:String
 })
 
-const User = mongoose.model('User',userSchema)
+const User = DB.weChatAppDB.model('User',userSchema)
 
 module.exports = User

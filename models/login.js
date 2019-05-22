@@ -2,12 +2,11 @@ const mongoose = require('mongoose')
 const DB = require('../mongoose.js')
 const Schema = mongoose.Schema
 
-const RecorderSchema = new Schema({
+const LoginSchema = new Schema({
     openId:String,
-    content:String,
     createdTime:Number,
 })
 
-const Recorder = DB.weChatAppDB.model('Recorder',RecorderSchema)
+const Login = DB.hallDB.model('Login',LoginSchema)
 
-module.exports = Recorder
+module.exports = Login
