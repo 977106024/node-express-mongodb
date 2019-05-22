@@ -1,8 +1,9 @@
 //引入模块
 const express = require('express')
 const app = express()
-const routes = require('./routes/index.js')
-const routesAdmin = require('./routes/admin.js')
+const routes = require('./routes/index')
+const routesAdmin = require('./routes/admin')
+const routesHall = require('./routes/hall')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 
@@ -31,11 +32,18 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
+//不需要登录的接口
+const noLogin = ['/weChatApp/login','/admin/QrLogin','/hall/LoginPcConfirm']
+
 //中间件拦截请求
 app.use((req, res, next)=>{
-  
-  //登录不需要验证token
-  if(req.path === '/weChatApp/login' || req.path === '/admin/QrLogin'){
+
+  let isLogin = noLogin.some(function(item){
+    return req.path === item
+  })
+
+  //跳过登录
+  if(isLogin){
     next()
   }else{
 
@@ -72,6 +80,7 @@ app.use((req, res, next)=>{
 //捕获请求
 app.use('/weChatApp',routes) //小程序
 app.use('/admin',routesAdmin) //admin
+app.use('/hall',routesHall) //hall
 
 // 监听端口
 // app.listen(2333)

@@ -1,5 +1,5 @@
 /**
- * admin
+ * admin 游戏大厅后台
  */
 
 const express = require('express')
