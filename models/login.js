@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const LoginSchema = new Schema({
     openId:String,
+    status:Boolean,
     createdTime:Number,
 })
 

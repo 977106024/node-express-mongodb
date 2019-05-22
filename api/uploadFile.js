@@ -6,7 +6,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const RecorderModel = require('../models/recorder')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
-Promise.promisifyAll(multiparty, { multiArgs: true })
+Promise.promisifyAll(multiparty, {multiArgs: true})
 
 // 文件上传-- 语音文件
 exports.uploadRecorder = async (req, res) => {
@@ -39,7 +39,7 @@ exports.uploadRecorder = async (req, res) => {
         const Recorder = new RecorderModel({
             openId: openId,
             content: baiduRes.result[0],
-            createdTime: parseInt(Date.now()/1000)
+            createdTime: parseInt(Date.now() / 1000)
         })
         let result = await Recorder.save()
 
@@ -56,7 +56,7 @@ exports.uploadRecorder = async (req, res) => {
         })
 
     } catch (err) {
-        
+
         //报错返回
         res.json({
             code: -200,
@@ -117,7 +117,7 @@ function baiduAI(wavPath) {
 exports.noteList = async (req, res) => {
     console.log('查询所有记录')
     let openId = req.decoded.name
-    let findRes = await RecorderModel.find({ openId: openId }, { _id: 1, content: 1, createdTime: 1 })
+    let findRes = await RecorderModel.find({openId: openId}, {_id: 1, content: 1, createdTime: 1})
     res.json({
         code: 200,
         data: {
@@ -131,77 +131,77 @@ exports.removeNote = async (req, res) => {
     const {id} = req.body
 
     try {
-        await RecorderModel.findByIdAndDelete({ _id: id })
+        await RecorderModel.findByIdAndDelete({_id: id})
         res.json({
-            code:200,
-            data:{
-                msg:"成功"
+            code: 200,
+            data: {
+                msg: "成功"
             }
         })
-    } catch(err) {
+    } catch (err) {
         res.json({
-            code:-200,
-            err:err
+            code: -200,
+            err: err
         })
     }
 }
 
 //编辑
 exports.editNote = async (req, res) => {
-    const {id,content} = req.body
+    const {id, content} = req.body
 
     try {
-        await RecorderModel.updateOne({ '_id': id }, { 'content': content })
+        await RecorderModel.updateOne({'_id': id}, {'content': content})
         res.json({
-            code:200,
-            data:{
-                msg:"成功"
+            code: 200,
+            data: {
+                msg: "成功"
             }
         })
-    } catch(err) {
+    } catch (err) {
         res.json({
-            code:-200,
-            err:err
+            code: -200,
+            err: err
         })
     }
 }
 
 //便签总条数
-exports.getNoteCount = async (req,res) => {
+exports.getNoteCount = async (req, res) => {
     let openId = req.decoded.name
 
     try {
         let result = await RecorderModel.count({openId: openId})
         res.json({
-            code:200,
-            data:{
-                result:result
+            code: 200,
+            data: {
+                result: result
             }
         })
-    } catch(err){
+    } catch (err) {
         res.json({
-            code:-200,
-            err:err
+            code: -200,
+            err: err
         })
     }
 }
 
 //模糊查询
-exports.noteSearch = async (req,res) => {
+exports.noteSearch = async (req, res) => {
     let openId = req.decoded.name
     let text = req.query.text
-    const reg = new RegExp(text,'i')
+    const reg = new RegExp(text, 'i')
 
     try {
-        let result = await RecorderModel.find({openId:openId,content:reg},{openId:0})
+        let result = await RecorderModel.find({openId: openId, content: reg}, {openId: 0})
         res.json({
-            code:200,
-            data:result
+            code: 200,
+            data: result
         })
-    }catch(err){
+    } catch (err) {
         res.json({
-            code:-200,
-            err:err
+            code: -200,
+            err: err
         })
     }
 }

@@ -5,20 +5,22 @@
 
 const LoginModel = require('../../models/login')
 
-exports.LoginPcConfirm = (req, res) => {
+exports.LoginPcConfirm = async (req, res) => {
     let openId = req.body.id
 
-    //查询可以登录名单 openId
-    LoginModel.find(function(err,result){
-        if(err){
-            res.json(err)
-            return
-        }
+    try {
+
+        //查询可以登录名单 openId
+        let idList = await LoginModel.find()
 
         //是否在白名单中
-        let b = result.some(item => openId === parseInt(item.openId))
+        let hasId = idList.some(item => openId === parseInt(item.openId))
 
-        if(b){
+        if(hasId){
+
+            //改变登录状态 true 确认登录
+            await LoginModel.updateOne({'openId':'9771'},{'status':true})
+
             res.json({
                 code:200,
                 data:'OK'
@@ -29,6 +31,10 @@ exports.LoginPcConfirm = (req, res) => {
                 data:'无权限'
             })
         }
-    })
-
+    } catch (err) {
+        res.json({
+            code:-200,
+            data:err
+        })
+    }
 }
