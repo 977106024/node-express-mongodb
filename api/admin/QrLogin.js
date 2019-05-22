@@ -1,7 +1,6 @@
 /**
  * 生成二维码
- * @returns {Promise<void>}
- * @constructor bohong
+ * bohong
  */
 
 const QRCode = require('qrcode')
@@ -11,7 +10,11 @@ exports.QrLogin = async (req,res) => {
 
     try {
         //生成二维码
-        res.json(await QRCode.toDataURL(url))
+        let qrBase64 = await QRCode.toDataURL(url,{width:350})
+        res.json({
+            code:200,
+            data:qrBase64
+        })
     } catch (err) {
         res.json(err)
     }
