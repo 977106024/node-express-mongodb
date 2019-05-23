@@ -35,7 +35,7 @@ exports.LoginPcConfirm = async (req, res) => {
         }
     } catch (err) {
         res.json({
-            code:-200,
+            code:300,
             data:err
         })
     }
@@ -43,17 +43,39 @@ exports.LoginPcConfirm = async (req, res) => {
 
 //是否扫码
 exports.ScanningQr = async (req,res) => {
-    const {uuid,statusQr} = req.body
-    console.log(uuid,statusQr)
+    const {uuid,statusQr,openId} = req.body
+
     try {
-        await qrUuidModel.updateOne({'uuid':uuid},{'statusQr':statusQr})
-        res.json({
-            code:200,
-            data:'OK'
-        })
+
+        //查询可以登录名单 openId
+        let user = await LoginModel.findOne({'openId':openId})
+
+        if(!user){
+            //不在名单中 无权限
+            res.json({
+                code:401,
+                data:false
+            })
+           return
+        }
+
+        //改变statusQr
+        let uuidRes = await qrUuidModel.updateOne({'uuid':uuid},{'statusQr':statusQr})
+        if(uuidRes.ok === 1 && uuidRes.nModified > 0 && uuidRes.n > 0){
+            res.json({
+                code:200,
+                data:true
+            })
+        }else{
+            //uuid错误
+            res.json({
+                code:401,
+                data:false
+            })
+        }
     } catch (err) {
         res.json({
-            code:-200,
+            code:300,
             data:err
         })
     }

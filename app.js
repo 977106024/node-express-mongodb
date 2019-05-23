@@ -94,4 +94,5 @@ http.createServer(app).listen(2333)
  * 200 ok
  * -200 error
  * 401 无权限
+ * 300 catch捕获的错误
  */
