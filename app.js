@@ -87,7 +87,7 @@ app.use('/hall', routesHall) //hall
 // 监听端口
 // app.listen(2333)
 http.createServer(app).listen(2333)
-https.createServer(options, app).listen(443)
+// https.createServer(options, app).listen(443)
 
 /**
  * 响应码：
