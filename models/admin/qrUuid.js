@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const qruuidSchema = new Schema({
     uuid:String,
     status:Boolean,
+    statusQr:Boolean,
     createdTime:Number,
 })
 

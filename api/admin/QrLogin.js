@@ -9,7 +9,7 @@ const qrUuidModel = require('../../models/admin/qrUuid')
 
 exports.QrLogin = async (req, res) => {
     let uuid = uuidv1()
-    let url = `${req.query.url}?uid=${uuid}`
+    let url = `${req.query.url}?uuid=${uuid}`
 
     try {
 
@@ -17,6 +17,7 @@ exports.QrLogin = async (req, res) => {
         const qrUuid = new qrUuidModel({
             uuid: uuid,
             status:false,
+            statusQr:false,
             createdTime: parseInt(Date.now() / 1000)
         })
 
@@ -49,6 +50,19 @@ exports.LoginStatus = async (req,res) => {
     res.json({
         code:200,
         data:uuidInfo.status
+    })
+}
+
+exports.statusQr = async (req,res) => {
+    let uuid = req.query.uuid
+
+    //查询uuid信息
+    let uuidInfo = await qrUuidModel.findOne({'uuid':uuid})
+
+    //返回登录状态 Boolean
+    res.json({
+        code:200,
+        data:uuidInfo.statusQr
     })
 }
 
