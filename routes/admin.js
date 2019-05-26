@@ -4,10 +4,14 @@
 
 const express = require('express')
 const router = express.Router()
-const admin = require('../api/admin/QrLogin')
+const adminLogin = require('../api/admin/QrLogin')
+const adminUpload = require('../api/admin/Upload')
 
 
-router.get('/QrLogin',admin.QrLogin)
-router.get('/LoginStatus',admin.LoginStatus)
-router.get('/statusQr',admin.statusQr)
+//登录
+router.get('/QrLogin',adminLogin.QrLogin)
+router.get('/LoginStatus',adminLogin.LoginStatus)
+router.get('/statusQr',adminLogin.statusQr)
+//图片上传
+router.get('/Upload',adminUpload.Upload)
 module.exports = router
