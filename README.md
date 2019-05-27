@@ -31,7 +31,7 @@ npm run dev              //运行
 
 前端小程序代码库：https://github.com/977106024/note-wechat-app
 
-# reacr-admin服务端
+# react-admin服务端
 
 * 使用`qrcode`生成二维码
 
