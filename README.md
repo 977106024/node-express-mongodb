@@ -34,3 +34,22 @@ npm run dev              //运行
 # reacr-admin服务端
 
 * 使用`qrcode`生成二维码
+
+
+
+
+# 项目整体布局
+```
+|-- api                     // 接口方法
+|   |-- admin               // admin接口
+|   |-- file                // 图片语音文件
+|   |-- hall                // 游戏大厅接口hall
+|-- modle                   // mongodb数据库表模块
+|   |-- admin               // admin表
+|   |--其他文件              // 小程序表
+|-- routes                  // 路由
+|-- utils                   //公共方法
+|-- mongoose.js             // 连接数据库
+|-- app.js                  // 启动
+|-- README.md               // 说明
+```
