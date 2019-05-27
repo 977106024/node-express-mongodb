@@ -44,7 +44,7 @@ npm run dev              //运行
 |   |-- admin               // admin接口
 |   |-- file                // 图片语音文件
 |   |-- hall                // 游戏大厅接口hall
-|-- modle                   // mongodb数据库表模块
+|-- models                  // mongodb数据库表模块
 |   |-- admin               // admin表
 |   |--其他文件              // 小程序表
 |-- routes                  // 路由
