@@ -13,5 +13,5 @@ router.get('/QrLogin',adminLogin.QrLogin)
 router.get('/LoginStatus',adminLogin.LoginStatus)
 router.get('/statusQr',adminLogin.statusQr)
 //图片上传
-router.get('/Upload',adminUpload.Upload)
+router.post('/Upload',adminUpload.Upload)
 module.exports = router

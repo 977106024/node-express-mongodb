@@ -18,11 +18,13 @@ exports.Upload = async (req,res) =>{
 
         //解析文件
         const files = await form.parseAsync(req)
-        console.log(files)
+
+        //文件存储路径
+        let filePath = files[1].imgfile[0].path
 
         res.json({
             code:"200",
-            data:`https://img.xuewuzhijing.top/game/${x}`
+            data:`https://img.xuewuzhijing.top/game/${filePath}`
         })
 
     } catch (err) {

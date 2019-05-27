@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 //不需要登录的接口
 const noLogin = ['/weChatApp/login', '/admin/QrLogin',
     '/hall/LoginPcConfirm', '/admin/LoginStatus',
-'/hall/scanningQr','/admin/statusQr']
+'/hall/scanningQr','/admin/statusQr','/admin/Upload']
 
 //中间件拦截请求
 app.use((req, res, next) => {
