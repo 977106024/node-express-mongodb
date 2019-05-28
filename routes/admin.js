@@ -6,7 +6,7 @@ const express = require('express')
 const router = express.Router()
 const adminLogin = require('../api/admin/QrLogin')
 const {Upload} = require('../api/admin/Upload')
-const {AddGame} = require('../api/admin/AddGame')
+const game = require('../api/admin/Game')
 
 
 //登录
@@ -16,5 +16,7 @@ router.get('/statusQr',adminLogin.statusQr)
 //图片上传
 router.post('/Upload',Upload)
 //新增游戏
-router.post('/AddGame',AddGame)
+router.post('/AddGame',game.AddGame)
+//游戏列表
+router.get('/getGameList',game.getGameList)
 module.exports = router
