@@ -31,7 +31,7 @@ exports.AddGame = async (req,res) => {
 }
 
 //游戏列表
-exports.getGameList = async (req,res) =>{
+exports.GetGameList = async (req,res) =>{
     const {name, id} = req.query
 
     try {
@@ -41,6 +41,26 @@ exports.getGameList = async (req,res) =>{
             data:result
         })
     }catch(err){
+        res.json({
+            code:300,
+            data:err
+        })
+    }
+}
+
+//游戏详情
+exports.GetGameDetails = async (req,res) => {
+    let id = req.query.id
+
+    try {
+        const result = await gameModel.findOne({_id:id})
+        if(result){
+            res.json({
+                code:200,
+                data:result
+            })
+        }
+    } catch(err){
         res.json({
             code:300,
             data:err

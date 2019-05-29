@@ -18,5 +18,7 @@ router.post('/Upload',Upload)
 //新增游戏
 router.post('/AddGame',game.AddGame)
 //游戏列表
-router.get('/getGameList',game.getGameList)
+router.get('/getGameList',game.GetGameList)
+//游戏详情
+router.get('/getGameDetails',game.GetGameDetails)
 module.exports = router
