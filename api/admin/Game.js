@@ -6,7 +6,7 @@ const gameModel = require('../../models/admin/game')
 
 //新增游戏
 exports.AddGame = async (req,res) => {
-    const {name,url,cover,rate} = req.body
+    const {id,name,url,cover,rate} = req.body
 
     try {
         const game = new gameModel({

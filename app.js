@@ -93,6 +93,7 @@ http.createServer(app).listen(2333)
  * 响应码：
  * 200 ok
  * -200 error
+ * 400 无效的token
  * 401 无权限
  * 300 catch捕获的错误
  */
