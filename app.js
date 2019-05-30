@@ -70,7 +70,7 @@ app.use((req, res, next) => {
         } else {
             //没有带token
             res.json({
-                code: 401,
+                code: 400,
                 data: {
                     msg: '没有登录！'
                 }

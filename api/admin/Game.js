@@ -9,19 +9,28 @@ exports.AddGame = async (req,res) => {
     const {id,name,url,cover,rate} = req.body
 
     try {
-        const game = new gameModel({
-            name:name,
-            url:url,
-            cover:cover,
-            reta:rate
-        })
-        //存库
-        await game.save()
+        if(id){
+            await gameModel.updateOne({_id:id},{name:name,url:url,rate:rate,cover:cover,updateTime: parseInt(Date.now() / 1000)})
+            res.json({
+                code:200,
+                data:true
+            })
+        }else{
+            const game = new gameModel({
+                name:name,
+                url:url,
+                cover:cover,
+                reta:rate,
+                createdTime:parseInt(Date.now() / 1000)
+            })
+            //存库
+            await game.save()
 
-        res.json({
-            code:200,
-            data:'ok'
-        })
+            res.json({
+                code:200,
+                data:true
+            })
+        }
     }catch (err) {
         res.json({
             code:300,

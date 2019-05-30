@@ -8,6 +8,7 @@ const gameSchema = new Schema({
     cover:String,
     reta:Number,
     createdTime:Number,
+    updateTime:Number
 })
 
 
