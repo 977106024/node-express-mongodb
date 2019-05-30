@@ -59,8 +59,56 @@ exports.GetGameDetails = async (req,res) => {
                 code:200,
                 data:result
             })
+        }else{
+            res.json({
+                code:-200,
+                data:'id不存在'
+            })
         }
     } catch(err){
+        res.json({
+            code:300,
+            data:err
+        })
+    }
+}
+
+//删除游戏
+exports.RemoveGame = async (req,res) => {
+    let id = req.body.id
+
+    try {
+      const result = await gameModel.findByIdAndDelete({_id:id})
+        if(result){
+            res.json({
+                code:200,
+                datq:true
+            })
+        }else{
+            res.json({
+                code:-200,
+                data:'id不存在'
+            })
+        }
+    }catch(err){
+        res.json({
+            code:200,
+            data:err
+        })
+    }
+}
+
+//更新游戏
+exports.UpdateGame = async (req,res) => {
+    const {id,name,url,rate,cover} = req.body
+
+    try {
+        await gameModel.updateOne({_id:id},{name:name,url:url,rate:rate,cover:cover})
+        res.json({
+            code:200,
+            data:true
+        })
+    }catch (err) {
         res.json({
             code:300,
             data:err

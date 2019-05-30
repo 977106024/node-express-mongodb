@@ -18,7 +18,11 @@ router.post('/Upload',Upload)
 //新增游戏
 router.post('/AddGame',game.AddGame)
 //游戏列表
-router.get('/getGameList',game.GetGameList)
+router.get('/GetGameList',game.GetGameList)
 //游戏详情
-router.get('/getGameDetails',game.GetGameDetails)
+router.get('/GetGameDetails',game.GetGameDetails)
+//游戏删除
+router.post('/RemoveGame',game.RemoveGame)
+//游戏更新
+router.post('/UpGame',game.RemoveGame)
 module.exports = router
