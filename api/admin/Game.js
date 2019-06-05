@@ -39,12 +39,25 @@ exports.AddGame = async (req,res) => {
     }
 }
 
+
 //游戏列表
 exports.GetGameList = async (req,res) =>{
-    const {name, id} = req.query
+    const query = req.query
+
+    //条件查询 or 默认返回所有
+    const param = {}
+    for(let key in query){
+        if(query[key] && query[key] !== ''){
+            if(key === 'id'){
+                param._id = query[key]
+            }else{
+                param[key] = query[key]
+            }
+        }
+    }
 
     try {
-        const result = await gameModel.find()
+        const result = await gameModel.find(param)
         res.json({
             code:200,
             data:result
