@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const gameSchema = new Schema({
     name:String,
+    describe:String,
     url:String,
     cover:String,
     reta:Number,

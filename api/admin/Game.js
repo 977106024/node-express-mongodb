@@ -6,18 +6,21 @@ const gameModel = require('../../models/admin/game')
 
 //新增游戏
 exports.AddGame = async (req,res) => {
-    const {id,name,url,cover,rate} = req.body
+    const {id,name,describe,url,cover,rate} = req.body
 
     try {
+        //id存在就更新游戏
         if(id){
-            await gameModel.updateOne({_id:id},{name:name,url:url,rate:rate,cover:cover,updateTime: parseInt(Date.now() / 1000)})
+            await gameModel.updateOne({_id:id},{name:name,describe:describe,url:url,rate:rate,cover:cover,updateTime: parseInt(Date.now() / 1000)})
             res.json({
                 code:200,
                 data:true
             })
         }else{
+            //不存在就新增
             const game = new gameModel({
                 name:name,
+                describe:describe,
                 url:url,
                 cover:cover,
                 reta:rate,
@@ -113,24 +116,6 @@ exports.RemoveGame = async (req,res) => {
             })
         }
     }catch(err){
-        res.json({
-            code:300,
-            data:err
-        })
-    }
-}
-
-//更新游戏
-exports.UpdateGame = async (req,res) => {
-    const {id,name,url,rate,cover} = req.body
-
-    try {
-        await gameModel.updateOne({_id:id},{name:name,url:url,rate:rate,cover:cover})
-        res.json({
-            code:200,
-            data:true
-        })
-    }catch (err) {
         res.json({
             code:300,
             data:err
