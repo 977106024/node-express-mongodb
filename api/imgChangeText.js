@@ -3,6 +3,7 @@ const multiparty = require('multiparty')
 const AipOcrClient = require("baidu-aip-sdk").ocr
 const textExtractModel = require('../models/textExtract')
 const fs = require('fs');
+const Utils = require('../utils/dirExists')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
 Promise.promisifyAll(multiparty, {
@@ -11,13 +12,16 @@ Promise.promisifyAll(multiparty, {
 
 exports.upImgFile = async (req, res) => {
 	console.log("img5555")
-	
-	//生成multiparty对象，并配置上传目标路径
-	const form = new multiparty.Form({
-		uploadDir: './api/file/imgChangeText/'
-	});
 
 	try {
+
+		//路径是否存在 不存在就创建
+		await Utils.dirExists('./api/file/imgChangeText/')
+
+		//生成multiparty对象，并配置上传目标路径
+		const form = new multiparty.Form({
+			uploadDir: './api/file/imgChangeText/'
+		});
 
 		//解析文件
 		const files = await form.parseAsync(req)
