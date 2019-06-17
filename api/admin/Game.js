@@ -98,7 +98,7 @@ exports.GetGameDetails = async (req,res) => {
 //删除游戏
 exports.RemoveGame = async (req,res) => {
     let id = req.body.id
-
+    
     try {
       const result = await gameModel.findByIdAndDelete({_id:id})
         if(result){
@@ -114,7 +114,7 @@ exports.RemoveGame = async (req,res) => {
         }
     }catch(err){
         res.json({
-            code:200,
+            code:300,
             data:err
         })
     }
