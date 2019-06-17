@@ -11,7 +11,7 @@ exports.Upload = async (req,res) =>{
 
     //生成multiparty对象，并配置上传目标路径
     const form = new multiparty.Form({
-        uploadDir: './api/file/imgChangeText/'
+        uploadDir: '../images'
     });
 
     try {
