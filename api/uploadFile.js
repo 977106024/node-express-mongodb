@@ -4,6 +4,7 @@ const AipSpeech = require("baidu-aip-sdk").speech;
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const RecorderModel = require('../models/recorder')
+const Utils = require('../utils/dirExists')
 
 //multiArgs: true 数组的形式返回 [多个值,,]
 Promise.promisifyAll(multiparty, {multiArgs: true})
@@ -13,6 +14,9 @@ exports.uploadRecorder = async (req, res) => {
     console.log('录音')
 
     try {
+
+        //路径是否存在 不存在就创建
+        await Utils.dirExists('./api/file/recorder/')
 
         //生成multiparty对象，并配置上传目标路径
         const form = new multiparty.Form({
