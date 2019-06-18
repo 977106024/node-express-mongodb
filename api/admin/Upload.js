@@ -21,8 +21,7 @@ exports.Upload = async (req,res) =>{
         const files = await form.parseAsync(req)
 
         //文件存储路径 图片名称
-        console.log(files[1].game[0])
-        let filePath = files[1].imgfile[0].path
+        let filePath = files[1].game[0].path
         let index = filePath.lastIndexOf('\\')
         let imgName = filePath.substr(index+1)
 
