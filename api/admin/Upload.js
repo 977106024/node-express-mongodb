@@ -22,7 +22,7 @@ exports.Upload = async (req,res) =>{
 
         //文件存储路径 图片名称
         let filePath = files[1].game[0].path
-        let index = filePath.lastIndexOf('\\')
+        let index = filePath.lastIndexOf('\\') //服务器上路径是'//'
         let imgName = filePath.substr(index+1)
 
         res.json({
