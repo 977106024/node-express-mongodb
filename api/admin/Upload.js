@@ -23,10 +23,12 @@ exports.Upload = async (req,res) =>{
         //文件存储路径 图片名称
         console.log(files[1].game[0])
         let filePath = files[1].imgfile[0].path
+        let index = filePath.lastIndexOf('\\')
+        let imgName = filePath.substr(index+1)
 
         res.json({
             code:"200",
-            data:`https://img.xuewuzhijing.top/game/${filePath}`
+            data:`https://img.xuewuzhijing.top/game/${imgName}`
         })
 
     } catch (err) {
