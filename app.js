@@ -6,6 +6,7 @@ const routesAdmin = require('./routes/admin')
 const routesHall = require('./routes/hall')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
+const cors = require('cors')
 
 
 // http https
@@ -16,26 +17,26 @@ const options = {
     cert: fs.readFileSync('utils/ssl/2114558_api.xuewuzhijing.top.pem')
 }
 
-
-//设置允许跨域访问该服务.
-app.all('*', function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,x-access-token');
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    if (req.method == 'OPTIONS') {
-        res.send(200);
-      }
-      else {
-        next();
-      }
-});
+// 设置允许跨域访问该服务
+// app.all('*', function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type,x-access-token');
+//     res.header('Access-Control-Allow-Methods', '*');
+//     res.header('Content-Type', 'application/json;charset=utf-8');
+//     if (req.method == 'OPTIONS') {
+//         res.send(200);
+//       }
+//       else {
+//         next();
+//       }
+// });
 
 
 //post请求解析
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(cors())
 
 //不需要登录的接口
 const noLogin = ['/weChatApp/login', '/admin/QrLogin',
